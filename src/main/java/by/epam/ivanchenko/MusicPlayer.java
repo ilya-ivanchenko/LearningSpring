@@ -42,8 +42,8 @@ public class MusicPlayer {
     }
 
     public void playMusic(){
-        for (Music x: musicList) {
-            System.out.println("Now playing: " + musicList.get(musicList.indexOf(x)).getSong());
+        for (Music track: musicList) {
+            System.out.println("Now playing: " + track.getSong());
             try {
                 Thread.sleep(2000);
             } catch (InterruptedException e) {

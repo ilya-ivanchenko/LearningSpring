@@ -10,27 +10,28 @@
 
     <context:property-placeholder location="classpath:musicPlayer.properties"/>
 
+    <bean id="rockMusic"
+          class="by.epam.ivanchenko.RockMusic">
+    </bean>
 
-    <util:list id="queue" >
-        <bean id="rockBean"
-              class="by.epam.ivanchenko.RockMusic">
-        </bean>
+    <bean id="classicMusic"
+          class="by.epam.ivanchenko.ClassicalMusic">
+    </bean>
 
-        <bean id="classicMusic"
-              class="by.epam.ivanchenko.ClassicalMusic">
-        </bean>
-
-        <bean id="rapMusic"
-              class="by.epam.ivanchenko.RapMusic">
-        </bean>
-    </util:list>
+    <bean id="rapMusic"
+          class="by.epam.ivanchenko.RapMusic">
+    </bean>
 
 
     <bean id="musicPlayer" class="by.epam.ivanchenko.MusicPlayer">
 <!--        <constructor-arg ref="musicBean"/>-->
-        <property name="musicList"  ref="queue"  />
-<!--        <property name="name" value="IPod"/>-->
-<!--        <property name="volume" value="23"/>-->
+        <property name="musicList">
+           <list>
+               <ref bean="classicMusic"/>
+               <ref bean="rapMusic"/>
+               <ref bean="rockMusic"/>
+           </list>
+        </property>
         <property name="name" value="${musicPlayer.name}"/>
         <property name="volume" value="${musicPlayer.volume}"/>
     </bean>

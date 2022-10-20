@@ -8,41 +8,49 @@
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd">
 
-    <context:property-placeholder location="classpath:musicPlayer.properties"/>
-
-    <bean id="rockMusic"
-          class="by.epam.ivanchenko.RockMusic">
-    </bean>
-
-    <bean id="classicMusic"
-          class="by.epam.ivanchenko.ClassicalMusic"
-          factory-method="myFactoryMethod"
-          init-method="myInit"
-          destroy-method="myDestroy">
-<!--    для scope:prototype  destroy-method не вызывается    -->
-    </bean>
-
-    <bean id="rapMusic"
-          class="by.epam.ivanchenko.RapMusic">
-    </bean>
 
 
-<!--    <bean id="musicPlayer"-->
-<!--          class="by.epam.ivanchenko.MusicPlayer"-->
-<!--          scope="prototype">-->
-<!--    &lt;!&ndash;  по умолчанию singleton&ndash;&gt;-->
 
-<!--&lt;!&ndash;        <constructor-arg ref="musicBean"/>&ndash;&gt;-->
 
-<!--        <property name="musicList">-->
-<!--           <list>-->
-<!--               <ref bean="classicMusic"/>-->
-<!--               <ref bean="rapMusic"/>-->
-<!--               <ref bean="rockMusic"/>-->
-<!--           </list>-->
-<!--        </property>-->
-<!--        <property name="name" value="${musicPlayer.name}"/>-->
-<!--        <property name="volume" value="${musicPlayer.volume}"/>-->
+<!--    <context:property-placeholder location="classpath:musicPlayer.properties"/>-->
+
+<!--    <bean id="rockMusic"-->
+<!--          class="by.epam.ivanchenko.RockMusic">-->
 <!--    </bean>-->
+
+<!--    <bean id="classicMusic"-->
+<!--          class="by.epam.ivanchenko.ClassicalMusic"-->
+<!--          factory-method="myFactoryMethod"-->
+<!--          init-method="myInit"-->
+<!--          destroy-method="myDestroy">-->
+<!--&lt;!&ndash;    для scope:prototype  destroy-method не вызывается    &ndash;&gt;-->
+<!--    </bean>-->
+
+<!--    <bean id="rapMusic"-->
+<!--          class="by.epam.ivanchenko.RapMusic">-->
+<!--    </bean>-->
+
+
+<!--&lt;!&ndash;    <bean id="musicPlayer"&ndash;&gt;-->
+<!--&lt;!&ndash;          class="by.epam.ivanchenko.MusicPlayer"&ndash;&gt;-->
+<!--&lt;!&ndash;          scope="prototype">&ndash;&gt;-->
+<!--&lt;!&ndash;    &lt;!&ndash;  по умолчанию singleton&ndash;&gt;&ndash;&gt;-->
+
+<!--&lt;!&ndash;&lt;!&ndash;        <constructor-arg ref="musicBean"/>&ndash;&gt;&ndash;&gt;-->
+
+<!--&lt;!&ndash;        <property name="musicList">&ndash;&gt;-->
+<!--&lt;!&ndash;           <list>&ndash;&gt;-->
+<!--&lt;!&ndash;               <ref bean="classicMusic"/>&ndash;&gt;-->
+<!--&lt;!&ndash;               <ref bean="rapMusic"/>&ndash;&gt;-->
+<!--&lt;!&ndash;               <ref bean="rockMusic"/>&ndash;&gt;-->
+<!--&lt;!&ndash;           </list>&ndash;&gt;-->
+<!--&lt;!&ndash;        </property>&ndash;&gt;-->
+<!--&lt;!&ndash;        <property name="name" value="${musicPlayer.name}"/>&ndash;&gt;-->
+<!--&lt;!&ndash;        <property name="volume" value="${musicPlayer.volume}"/>&ndash;&gt;-->
+<!--&lt;!&ndash;    </bean>&ndash;&gt;-->
+
+    <context:component-scan base-package="by.epam.ivanchenko" />
+<!--   сканирование компонентов -->
+
 
 </beans>

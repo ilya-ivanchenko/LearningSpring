@@ -12,7 +12,7 @@
 
 
 
-    <context:property-placeholder location="classpath:musicPlayer.properties"/>
+<!--    <context:property-placeholder location="classpath:musicPlayer.properties"/>-->
 
 <!--    <bean id="rockMusic"-->
 <!--          class="by.epam.ivanchenko.RockMusic">-->
@@ -49,7 +49,7 @@
 <!--&lt;!&ndash;        <property name="volume" value="${musicPlayer.volume}"/>&ndash;&gt;-->
 <!--&lt;!&ndash;    </bean>&ndash;&gt;-->
 
-    <context:component-scan base-package="by.epam.ivanchenko" />
+<!--    <context:component-scan base-package="by.epam.ivanchenko" />-->
 <!--   сканирование компонентов -->
 
 

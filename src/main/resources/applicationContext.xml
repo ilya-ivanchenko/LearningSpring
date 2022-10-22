@@ -12,17 +12,17 @@
 
 
 
-<!--    <context:property-placeholder location="classpath:musicPlayer.properties"/>-->
+    <context:property-placeholder location="classpath:musicPlayer.properties"/>
 
 <!--    <bean id="rockMusic"-->
 <!--          class="by.epam.ivanchenko.RockMusic">-->
 <!--    </bean>-->
 
-<!--    <bean id="classicMusic"-->
+<!--    <bean id="classicalMusic"-->
 <!--          class="by.epam.ivanchenko.ClassicalMusic"-->
-<!--          factory-method="myFactoryMethod"-->
 <!--          init-method="myInit"-->
 <!--          destroy-method="myDestroy">-->
+<!--        &lt;!&ndash;          factory-method="myFactoryMethod"&ndash;&gt;-->
 <!--&lt;!&ndash;    для scope:prototype  destroy-method не вызывается    &ndash;&gt;-->
 <!--    </bean>-->
 

@@ -2,6 +2,7 @@ package by.epam.ivanchenko;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -20,7 +21,11 @@ public class MusicPlayer {
 //    private Music music1;
 //    private Music music2;
 //    private List<Music> musicList = new ArrayList<>();
-//    private String name;
+    @Value("${musicPlayer.name}")
+    private String name;
+
+    @Value("${musicPlayer.volume}")
+    private int volume;
     @Autowired
     private ClassicalMusic classicalMusicList;
     @Autowired
@@ -31,23 +36,23 @@ public class MusicPlayer {
 //        this.musicList = musicList;
 //    }
 //
-//    public String getName() {
-//        return name;
-//    }
-//
-//    public void setName(String name) {
-//        this.name = name;
-//    }
-//
-//    public int getVolume() {
-//        return volume;
-//    }
-//
-//    public void setVolume(int volume) {
-//        this.volume = volume;
-//    }
-//
-//    private int volume;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getVolume() {
+        return volume;
+    }
+
+    public void setVolume(int volume) {
+        this.volume = volume;
+    }
+
+
 
 
 //    @Autowired
@@ -55,11 +60,11 @@ public class MusicPlayer {
 //        this.music = music;
 //    }
 
-    @Autowired
-    public MusicPlayer(ClassicalMusic classicalMusicList, RockMusic rockMusicList) {
-        this.classicalMusicList = classicalMusicList;
-        this.rockMusicList = rockMusicList;
-    }
+//    @Autowired
+//    public MusicPlayer(ClassicalMusic classicalMusicList, RockMusic rockMusicList) {
+//        this.classicalMusicList = classicalMusicList;
+//        this.rockMusicList = rockMusicList;
+//    }
 
 
 //    public MusicPlayer(List<Music> musicList) {    // IoC
@@ -80,16 +85,19 @@ public class MusicPlayer {
 //            }
 //        }
 //    }
-    public void playMusic(Genre genre) {
-        Random random = new Random();
-        int randomNumber = random.nextInt(3);
 
-        if (genre == Genre.CLASSICAL) {
-            System.out.println(classicalMusicList.getSong().get(randomNumber));
-        } else if (genre == Genre.ROCK) {
-            System.out.println(rockMusicList.getSong().get(randomNumber));
-        }
-    }
+
+
+//    public void playMusic(Genre genre) {
+//        Random random = new Random();
+//        int randomNumber = random.nextInt(3);
+//
+//        if (genre == Genre.CLASSICAL) {
+//            System.out.println(classicalMusicList.getSong().get(randomNumber));
+//        } else if (genre == Genre.ROCK) {
+//            System.out.println(rockMusicList.getSong().get(randomNumber));
+//        }
+//    }
 }
 
 

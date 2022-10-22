@@ -9,15 +9,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-@Component
+//@Component
 public class MusicPlayer {
 
 //    @Autowired
-//    public MusicPlayer(@Qualifier("classicalMusicList") Music music1, @Qualifier("rockMusicList") Music music2) {
-//        this.music1 = music1;
-//        this.music2 = music2;
-//    }
+    public MusicPlayer(List<Music> musicList) {
+        this.musicList = musicList;
 
+    }
+
+    private List<Music> musicList;
 //    private Music music1;
 //    private Music music2;
 //    private List<Music> musicList = new ArrayList<>();
@@ -26,10 +27,11 @@ public class MusicPlayer {
 
     @Value("${musicPlayer.volume}")
     private int volume;
-    @Autowired
-    private ClassicalMusic classicalMusicList;
-    @Autowired
-    private RockMusic rockMusicList;
+//    @Autowired
+//    private ClassicalMusic classicalMusicList;
+//    @Autowired
+//    private RockMusic rockMusicList;
+//    private RapMusic rapMusicList;
 
 
 //    public void setMusicList(List<Music> musicList) {
@@ -87,17 +89,12 @@ public class MusicPlayer {
 //    }
 
 
+    public String playMusic() {
+        Random random = new Random();
+        int randomNumber = random.nextInt(musicList.size());
 
-//    public void playMusic(Genre genre) {
-//        Random random = new Random();
-//        int randomNumber = random.nextInt(3);
-//
-//        if (genre == Genre.CLASSICAL) {
-//            System.out.println(classicalMusicList.getSong().get(randomNumber));
-//        } else if (genre == Genre.ROCK) {
-//            System.out.println(rockMusicList.getSong().get(randomNumber));
-//        }
-//    }
+        return "Now Playing: " + musicList.get(randomNumber).getSong() + "\nVolume " + volume + "\nDevice: " + name;
+    }
 }
 
 

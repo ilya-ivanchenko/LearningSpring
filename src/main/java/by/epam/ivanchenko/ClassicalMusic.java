@@ -3,18 +3,26 @@ package by.epam.ivanchenko;
 
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
-public class ClassicalMusic implements Music{
-    private ClassicalMusic() {
+public class ClassicalMusic implements Music {
+    List<String> classicalMusicList = new ArrayList<>();
+
+     {
+        classicalMusicList.add("Vivaldi");
+        classicalMusicList.add("Bah");
+        classicalMusicList.add("Zimmer");
     }
 
-    public static ClassicalMusic myFactoryMethod() {
-        return new ClassicalMusic();
-    }
     @Override
-    public String getSong() {
-        return "Times of the year - Vivaldi";
+    public List<String> getSong() {
+        return classicalMusicList;
     }
+
+
+
 
     public void myInit() {
         System.out.println("starting initialization...");

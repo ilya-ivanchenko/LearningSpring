@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/people")
 public class PeopleController {
 
-//    @Autowired                                                              //внедрение объекта personDAO
+    //    @Autowired                                                              //внедрение объекта personDAO
     private final PersonDAO personDAO;
 
     public PeopleController(PersonDAO personDAO) {
@@ -38,8 +38,26 @@ public class PeopleController {
     }
 
     @PostMapping
-    public String createPeople(@ModelAttribute("person")Person person) {
+    public String createPeople(@ModelAttribute("person") Person person) {
         personDAO.save(person);
+        return "redirect:/people";
+    }
+
+    @GetMapping("/{id}/edit")
+    public String edit(Model peopleModel, @PathVariable("id") int id) {
+        peopleModel.addAttribute("person", personDAO.show(id));
+        return "people/edit";
+    }
+
+    @PatchMapping("/{id}")
+    public String update(@ModelAttribute("person") Person person, @PathVariable("id") int id) {
+        personDAO.update(id, person);
+        return "redirect:/people";
+    }
+
+    @DeleteMapping("/{id}")
+    public String delete( @PathVariable("id") int id) {
+        personDAO.delete(id);
         return "redirect:/people";
     }
 }

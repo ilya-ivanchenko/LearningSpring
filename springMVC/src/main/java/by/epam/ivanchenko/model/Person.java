@@ -16,7 +16,7 @@ public class Person {
     private String name;
 
     @Min(value = 0, message = "Age should be more than 0")
-    @NotEmpty(message = "Age shouldn't not be empty!")
+//    @NotEmpty(message = "Age shouldn't not be empty!")
     private int age;
 
     @NotEmpty(message = "Email shouldn't not be empty!")

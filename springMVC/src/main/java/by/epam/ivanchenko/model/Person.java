@@ -3,10 +3,7 @@ package by.epam.ivanchenko.model;
 
 
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 public class Person {
     private int id;
@@ -16,7 +13,6 @@ public class Person {
     private String name;
 
     @Min(value = 0, message = "Age should be more than 0")
-//    @NotEmpty(message = "Age shouldn't not be empty!")
     private int age;
 
     @NotEmpty(message = "Email shouldn't not be empty!")

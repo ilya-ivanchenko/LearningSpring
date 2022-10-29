@@ -16,7 +16,10 @@ public class PersonDAO {
     private static final String PASSWORD = "admin";
 
     private static final String SHOW_ALL_USER = "SELECT * FROM person";
-
+    private static final String ADD_PERSON = "INSERT INTO person VALUES(1, ?, ?, ?)";
+    private static final String FIND_PERSON = "SELECT * FROM person WHERE id = ?";
+    private static final String EDIT_PERSON = "UPDATE person SET name = ?, age = ?, email = ? WHERE id = ?";
+    private static final String DELETE_PERSON = "DELETE FROM person WHERE  id = ?";
 
     private static Connection connection;
 
@@ -57,34 +60,70 @@ public class PersonDAO {
     }
 
     public Person show(int id) {
-//        return people.stream().filter(person -> person.getId() == id).findAny().orElse(null);
-        return null; //
+        Person person = null;
+        ResultSet resultSet;
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(FIND_PERSON);
+
+            preparedStatement.setInt(1, id);
+
+            resultSet = preparedStatement.executeQuery();
+
+            resultSet.next();
+
+            person = new Person();                                                          // получим только первого, если есть одинкаовые id
+            person.setId(resultSet.getInt("id"));
+            person.setName(resultSet.getString("name"));
+            person.setAge(resultSet.getInt("age"));
+            person.setEmail(resultSet.getString("email"));
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return person;
     }
 
 
-    public void save(Person person){
-//        person.setId(++PEOPLE_COUNT);
-//        people.add(person);
+    public void save(Person person) {
+
         try {
-            Statement statement = connection.createStatement();
+            PreparedStatement preparedStatement = connection.prepareStatement(ADD_PERSON);
 
-            String ADD_NEW_USER = "INSERT INTO person VALUES (" + 1 + ", '" +  person.getName() + "', " +
-            person.getAge() + ", '"  + person.getEmail() + "')";
+            preparedStatement.setString(1, person.getName());
+            preparedStatement.setInt(2, person.getAge());
+            preparedStatement.setString(3, person.getEmail());
 
-            statement.executeUpdate(ADD_NEW_USER);
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace(); //
         }
     }
 
-    public void update(int id, Person updatePerson){
-//        Person personToBeUpdated = show(id);
-//        personToBeUpdated.setName(updatePerson.getName());
-//        personToBeUpdated.setAge(updatePerson.getAge());
-//        personToBeUpdated.setEmail(updatePerson.getEmail());
+    public void update(int id, Person updatePerson) {
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(EDIT_PERSON);
+
+            preparedStatement.setString(1, updatePerson.getName());
+            preparedStatement.setInt(2, updatePerson.getAge());
+            preparedStatement.setString(3, updatePerson.getEmail());
+            preparedStatement.setInt(4, id);
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace(); //
+        }
     }
 
     public void delete(int id) {
-//        people.removeIf(p -> p.getId() == id);
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(DELETE_PERSON);
+
+            preparedStatement.setInt(1, id);
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace(); //
+        }
     }
 }

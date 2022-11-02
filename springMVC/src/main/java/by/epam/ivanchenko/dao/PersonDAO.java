@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Component                                                              // созд. бина
 public class PersonDAO {
@@ -22,10 +23,11 @@ public class PersonDAO {
     }
 
     private static final String SHOW_ALL_USER = "SELECT * FROM person";
-    private static final String ADD_PERSON = "INSERT INTO person VALUES(1, ?, ?, ?)";
+    private static final String ADD_PERSON = "INSERT INTO person (name, age, email, address) VALUES(?, ?, ?, ?)";
     private static final String ADD_PERSON_TEST = "INSERT INTO person VALUES(?, ?, ?, ?)";
     private static final String FIND_PERSON = "SELECT * FROM person WHERE id = ?";
-    private static final String EDIT_PERSON = "UPDATE person SET name = ?, age = ?, email = ? WHERE id = ?";
+    private static final String FIND_PERSON_EMAIL = "SELECT * FROM person WHERE email = ?";
+    private static final String EDIT_PERSON = "UPDATE person SET name = ?, age = ?, email = ?, address = ? WHERE id = ?";
     private static final String DELETE_PERSON = "DELETE FROM person WHERE  id = ?";
 
     public List<Person> index() {
@@ -42,17 +44,26 @@ public class PersonDAO {
     }
 // stream().findAny().orElse(null)  - если будет хоть один объект Person, то он будет возвращен, если  строк не найдено - то возвращено null (может быть объект Error)
 
+    public Optional<Person> show(String email) {
+        return jdbcTemplate.query(FIND_PERSON_EMAIL, new BeanPropertyRowMapper<>(Person.class),email).stream().findAny();
+    }
+
     public void save(Person person) {
-        jdbcTemplate.update(ADD_PERSON, person.getName(), person.getAge(), person.getEmail());
+        jdbcTemplate.update(ADD_PERSON, person.getName(), person.getAge(), person.getEmail(), person.getAddress());
     }
 
     public void update(int id, Person updatePerson) {
-        jdbcTemplate.update(EDIT_PERSON, updatePerson.getName(), updatePerson.getAge(), updatePerson.getEmail(), id);
+        jdbcTemplate.update(EDIT_PERSON, updatePerson.getName(), updatePerson.getAge(), updatePerson.getEmail(), updatePerson.getAddress(), id);
     }
 
     public void delete(int id) {
         jdbcTemplate.update(DELETE_PERSON, id);
     }
+
+
+
+
+
 
 
     // тест пакетной вставки 1000 записей
@@ -101,7 +112,7 @@ public class PersonDAO {
         List<Person> people = new ArrayList<>();
 
         for (int i = 0; i < 1000; i++) {
-            people.add(new Person(i, "Name" + i, 30, "test" + i + "@gmail.com"));
+            people.add(new Person(i, "Name" + i, 30, "test" + i + "@gmail.com", "my address"));
         }
         return people;
     }

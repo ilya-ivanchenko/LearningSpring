@@ -3,24 +3,25 @@ package by.epam.ivanchenko.controller;
 import by.epam.ivanchenko.dao.PersonDAO;
 import by.epam.ivanchenko.model.Person;
 
-
+import by.epam.ivanchenko.util.PersonValidator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
-
-
 @Controller
 @RequestMapping("/people")
 public class PeopleController {
 
-    //    @Autowired                                                              //внедрение объекта personDAO
     private final PersonDAO personDAO;
+    private final PersonValidator personValidator;
 
-    public PeopleController(PersonDAO personDAO) {
+    @Autowired
+    public PeopleController(PersonDAO personDAO, PersonValidator personValidator) {
         this.personDAO = personDAO;
+        this.personValidator = personValidator;
     }
 
     @GetMapping()                                                        //по URL /people будет вызываться метод index()
@@ -44,6 +45,8 @@ public class PeopleController {
 
     @PostMapping
     public String createPeople(@ModelAttribute("person") @Valid Person person, BindingResult bindingResult) {   // валидируемый объект + объект bindingResult для ошибок валидации
+        personValidator.validate(person, bindingResult);
+
         if (bindingResult.hasErrors()) {
             return "people/new";
         }
@@ -59,6 +62,8 @@ public class PeopleController {
 
     @PatchMapping("/{id}")
     public String update(@ModelAttribute("person") @Valid Person person, BindingResult bindingResult, @PathVariable("id") int id) {
+        personValidator.validate(person, bindingResult);
+
         if (bindingResult.hasErrors()) {
             return "people/edit";
         }

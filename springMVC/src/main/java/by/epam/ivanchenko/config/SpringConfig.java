@@ -37,6 +37,7 @@ public class SpringConfig implements WebMvcConfigurer {               // экв�
     @Bean
     public SpringResourceTemplateResolver templateResolver() {
         SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
+        templateResolver.setCharacterEncoding("UTF-8");                          // для норм. кодировки
         templateResolver.setApplicationContext(applicationContext);
         templateResolver.setPrefix("/WEB-INF/view/");
         templateResolver.setSuffix(".html");
@@ -55,6 +56,8 @@ public class SpringConfig implements WebMvcConfigurer {               // экв�
     public void configureViewResolvers(ViewResolverRegistry registry) {         // сообщаем spring, что хотим использовать шаблонизатор  thymeleaf
         ThymeleafViewResolver resolver = new ThymeleafViewResolver();
         resolver.setTemplateEngine(templateEngine());
+        resolver.setCharacterEncoding("UTF-8");                                 // для норм. кодировки
+        resolver.setContentType("text/html; charset=UTF-8");
         registry.viewResolver(resolver);
     }
 

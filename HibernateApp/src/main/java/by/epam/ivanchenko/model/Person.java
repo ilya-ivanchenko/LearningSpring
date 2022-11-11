@@ -1,29 +1,26 @@
 package by.epam.ivanchenko.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity                        // в hibernate можно использоать только классы, помеченные, как сущности(@Entity)
-//@Table(name = "person")             // таблица в БД,если совпадает с классом, можно не указывать @Table...
+@Table(name = "person")             // таблица в БД,если совпадает с классом, можно не указывать @Table...
 public class Person {
 
     @Id                             //для  primary key
-    @Column(name = "id")
+    @Column(name = "ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)    // стратегия генерации автоматического id
     private int id;
 
-    @Column(name = "name")
+    @Column(name = "NAME")
     private String name;
 
-    @Column(name = "age")
+    @Column(name = "AGE")
     private int age;
 
     public Person() {              //пустой кон-р необходим для hibernate
     }
 
-    public Person(int id, String name, int age) {
-        this.id = id;
+    public Person(String name, int age) {
         this.name = name;
         this.age = age;
     }

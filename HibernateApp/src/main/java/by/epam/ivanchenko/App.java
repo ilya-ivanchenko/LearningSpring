@@ -15,11 +15,23 @@ public class App {
         try {
             session.beginTransaction();
 
-            Person person = session.get(Person.class,1);                                    // поиск и получение сущности Person  в БД по primary key = 1
-            System.out.println(person.getName());
-            System.out.println(person.getAge());
+//           Person person1 = new Person("Test1", 30);
+//           Person person2 = new Person("Test2", 25);
+//           Person person3 = new Person("Test3", 28);
+//           session.save(person1);
+//           session.save(person2);
+//           session.save(person3);
+
+//           Person person =  session.get(Person.class,2);
+//           person.setName("New name");
+
+//            session.delete(person);
+            Person person = new Person("Some person", 40);
+            session.save(person);
 
             session.getTransaction().commit();
+
+            System.out.println(person.getId());
 
         } finally {
             sessionFactory.close();

@@ -1,33 +1,39 @@
 package by.epam.ivanchenko.model;
 
 import javax.persistence.*;
+import java.util.List;
 
-@Entity                        // в hibernate можно использоать только классы, помеченные, как сущности(@Entity)
-@Table(name = "person")             // таблица в БД,если совпадает с классом, можно не указывать @Table...
+@Entity
+@Table(name = "person")
 public class Person {
 
-    @Id                             //для  primary key
-    @Column(name = "ID")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)    // стратегия генерации автоматического id
+    @OneToMany(mappedBy ="owner")
+    private List<Item> items;
+
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "NAME")
+    @Column(name = "name")
     private String name;
 
-    @Override
-    public String toString() {
-        return this.name + ", " + this.age;
-    }
-
-    @Column(name = "AGE")
+    @Column(name = "age")
     private int age;
 
-    public Person() {              //пустой кон-р необходим для hibernate
-    }
-
-    public Person(String name, int age) {
+    public Person( String name, int age) {
         this.name = name;
         this.age = age;
+    }
+    public Person() {
+    }
+
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Item> items) {
+        this.items = items;
     }
 
     public int getId() {
@@ -52,5 +58,14 @@ public class Person {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    @Override
+    public String toString() {
+        return "Person :" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                '.';
     }
 }

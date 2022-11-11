@@ -5,6 +5,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import java.util.List;
+
 
 public class App {
     public static void main(String[] args) {
@@ -15,23 +17,15 @@ public class App {
         try {
             session.beginTransaction();
 
-//           Person person1 = new Person("Test1", 30);
-//           Person person2 = new Person("Test2", 25);
-//           Person person3 = new Person("Test3", 28);
-//           session.save(person1);
-//           session.save(person2);
-//           session.save(person3);
+//            List<Person> people  = session.createQuery("FROM Person WHERE name LIKE 'J%'").getResultList();   // HQL - запрос
+//            session.createQuery("UPDATE Person SET name='Test' WHERE age < 25").executeUpdate();
+            session.createQuery("DELETE FROM Person WHERE age < 25").executeUpdate();
 
-//           Person person =  session.get(Person.class,2);
-//           person.setName("New name");
-
-//            session.delete(person);
-            Person person = new Person("Some person", 40);
-            session.save(person);
+//            for(Person person : people) {
+//                System.out.println(person);
+//            }
 
             session.getTransaction().commit();
-
-            System.out.println(person.getId());
 
         } finally {
             sessionFactory.close();

@@ -14,6 +14,11 @@ public class Person {
     @Column(name = "NAME")
     private String name;
 
+    @Override
+    public String toString() {
+        return this.name + ", " + this.age;
+    }
+
     @Column(name = "AGE")
     private int age;
 

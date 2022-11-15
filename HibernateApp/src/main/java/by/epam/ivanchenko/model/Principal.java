@@ -5,8 +5,8 @@ import org.hibernate.annotations.Cascade;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "person")
-public class Person {
+@Table(name = "principal")
+public class Principal {
 
     @Id
     @Column(name = "id")
@@ -19,14 +19,14 @@ public class Person {
     @Column(name = "age")
     private int age;
 
-    @OneToOne(mappedBy = "person")
+    @OneToOne(mappedBy = "principal")
     @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
-    private Passport passport;
+    private School school;
 
-    public Person() {
+    public Principal() {
     }
 
-    public Person(String name, int age) {
+    public Principal(String name, int age) {
         this.name = name;
         this.age = age;
     }
@@ -55,22 +55,22 @@ public class Person {
         this.age = age;
     }
 
-    public Passport getPassport() {
-        return passport;
+    public School getSchool() {
+        return school;
     }
 
-    public void setPassport(Passport passport) {
-        this.passport = passport;
-        passport.setPerson(this);
+    public void setSchool(School school) {
+        this.school = school;
+        school.setPrincipal(this);
     }
 
     @Override
     public String toString() {
-        return "Person{" +
+        return "Principal{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", age=" + age +
-                ", passport=" + passport +
+                ", school=" + school +
                 '}';
     }
 }

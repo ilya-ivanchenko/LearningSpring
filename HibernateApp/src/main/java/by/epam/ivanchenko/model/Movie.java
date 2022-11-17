@@ -1,19 +1,15 @@
 package by.epam.ivanchenko.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "movie")
 public class Movie {
 
-
-    @ManyToOne
-    @JoinColumn(name = "director_id", referencedColumnName = "director_id")
-    private Director producer;
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "movie_id")
+    @Column(name = "id")
     private int id;
 
     @Column(name = "name")
@@ -21,10 +17,12 @@ public class Movie {
     @Column(name = "year_of_production")
     private int year;
 
-    public Movie(String name, int year, Director producer) {
+    @ManyToMany(mappedBy = "movies")
+    private List<Actor> actors;
+
+    public Movie(String name, int year) {
         this.name = name;
         this.year = year;
-        this.producer = producer;
     }
 
     public Movie() {
@@ -54,12 +52,32 @@ public class Movie {
         this.year = year;
     }
 
-    public Director getProducer() {
-        return producer;
+    public List<Actor> getActors() {
+        return actors;
     }
 
-    public void setProducer(Director producer) {
-        this.producer = producer;
+    public void setActors(List<Actor> actors) {
+        this.actors = actors;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Movie movie = (Movie) o;
+
+        if (id != movie.id) return false;
+        if (year != movie.year) return false;
+        return name != null ? name.equals(movie.name) : movie.name == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + year;
+        return result;
     }
 
     @Override
@@ -70,4 +88,6 @@ public class Movie {
                 ", year=" + year +
                 '.' ;
     }
+
+
 }

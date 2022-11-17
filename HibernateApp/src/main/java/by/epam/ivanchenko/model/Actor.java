@@ -4,26 +4,32 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "director")
-public class Director {
+@Table(name = "actor")
+public class Actor {
 
-    @OneToMany(mappedBy = "producer")
-    private List<Movie> movies;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "director_id")
+    @Column(name = "id")
     private int id;
     @Column(name = "name")
     private String name;
     @Column(name = "age")
     private int age;
 
-    public Director(String name, int age) {
+    @ManyToMany
+    @JoinTable(
+            name = "actor_movie",
+            joinColumns = @JoinColumn(name = "actor_id"),
+            inverseJoinColumns = @JoinColumn(name = "movie_id")
+    )
+    private List<Movie> movies;
+
+    public Actor(String name, int age) {
         this.name = name;
         this.age = age;
     }
 
-    public Director() {
+    public Actor() {
 
     }
 
@@ -59,10 +65,29 @@ public class Director {
         this.movies = movies;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Actor actor = (Actor) o;
+
+        if (id != actor.id) return false;
+        if (age != actor.age) return false;
+        return name != null ? name.equals(actor.name) : actor.name == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + age;
+        return result;
+    }
 
     @Override
     public String toString() {
-        return "Director: " +
+        return "Actor: " +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", age=" + age +

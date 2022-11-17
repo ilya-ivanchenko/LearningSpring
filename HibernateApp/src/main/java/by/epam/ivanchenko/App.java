@@ -1,7 +1,10 @@
 package by.epam.ivanchenko;
 
 import by.epam.ivanchenko.model.Actor;
+import by.epam.ivanchenko.model.Item;
 import by.epam.ivanchenko.model.Movie;
+import by.epam.ivanchenko.model.Person;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -13,47 +16,55 @@ import java.util.List;
 
 public class App {
     public static void main(String[] args) {
-        Configuration configuration = new Configuration().addAnnotatedClass(Actor.class).addAnnotatedClass(Movie.class);
+        Configuration configuration = new Configuration().addAnnotatedClass(Person.class).addAnnotatedClass(Item.class);
 
         SessionFactory sessionFactory = configuration.buildSessionFactory();
         try (sessionFactory) {
             Session session = sessionFactory.getCurrentSession();
             session.beginTransaction();
 
-// Созд. нового фильма и актеров
-//            Movie movie = new Movie("Pulp Fiction", 1994);
-//            Actor actor1 = new Actor("Harvey Keitel",81);
-//            Actor actor2 = new Actor("Samuel L. Jackson", 72);
+// LAZY:
+//            Person person = session.get(Person.class, 3);
+//            System.out.println(person);
 //
-//            // Arrays.asList() можно вместо List.of()
-//            movie.setActors(new ArrayList<>(List.of(actor1, actor2)));
-//            actor1.setMovies(new ArrayList<>(Collections.singletonList(movie)));
-//            actor2.setMovies(new ArrayList<>(Collections.singletonList(movie)));
-//
-//            session.save(movie);
-//            session.save(actor1);
-//            session.save(actor2);
+//            System.out.println(person.getItems());
 
-//            Movie movie = session.get(Movie.class,1);
-//            System.out.println(movie.getActors());
+// EAGER:
+//            Item item = session.get(Item.class,4);
+//            System.out.println("Получили товар");
+//            System.out.println(item.getOwner());
 
-// Созд. нового фильма и назначение его актеру
-//            Movie movie = new Movie("Resevoir Dogs", 1992);
-//            Actor actor = session.get(Actor.class, 4);
-//            movie.setActors(new ArrayList<>(Collections.singletonList(actor)));
-//            actor.getMovies().add(movie);
-//
-//            session.save(movie);
+            Person person = session.get(Person.class, 3);
+            System.out.println("Получили человека");
+ //            System.out.println(person.getItems());
 
-// Удаляем фильм у актера
-            Actor actor = session.get(Actor.class,4);
-            System.out.println(actor.getMovies());
-            Movie movieToRemove = actor.getMovies().get(1);
-
-            actor.getMovies().remove(1); // или вместо 1  movieToRemove
-            movieToRemove.getActors().remove(actor);  // для удаления объекта нужны hashCode() и  equals()
+//            Hibernate.initialize(person.getItems());        // подгружаем связанные сущности
 
             session.getTransaction().commit();
+            System.out.println("Сессия завершилась");
+
+
+
+
+            // Открываем сессию и транзакцию еще раз(в любом месте)
+            session = sessionFactory.getCurrentSession();
+            session.beginTransaction();
+
+            System.out.println("Вторая транзакция");
+            // объект person еще в сост. detached
+
+            person = (Person) session.merge(person); // связ. сессию с объектом person
+
+            Hibernate.initialize(person.getItems()); // можно вместо этого написать HQl-код:
+//          List<Item> items =  session.createQuery("SELECT i from Item i where i.owner.id=:personId", Item.class).setParameter("personId", person.getId()).getResultList();
+
+            session.getTransaction().commit();
+
+            System.out.println("Вне второй сессии");
+           System.out.println(person.getItems()); // сработает, т.к. связаннне товары были загружены
+
+
+
         }
     }
 }

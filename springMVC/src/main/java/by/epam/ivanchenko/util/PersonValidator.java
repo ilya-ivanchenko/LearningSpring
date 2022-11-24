@@ -26,8 +26,8 @@ public class PersonValidator implements Validator {
     public void validate(Object target, Errors errors) {
         Person person = (Person) target;
                                                    // проверяем, есть ли чел. с таким же email в БД
-        if(personDAO.show(person.getEmail()).isPresent()) {    //вместо проверки на  null
-            errors.rejectValue("email", "", "Email is already exist");
-        }
+//        if(personDAO.show(person.getEmail()).isPresent()) {    //вместо проверки на  null
+//            errors.rejectValue("email", "", "Email is already exist");
+//        }
     }
 }

@@ -1,36 +1,37 @@
 package by.epam.ivanchenko.model;
 
-
-
-
+import javax.persistence.*;
 import javax.validation.constraints.*;
-
+@Entity
+@Table(name = "person")
 public class Person {
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @NotEmpty(message = "Name shouldn't not be empty!")
     @Size(min = 2, max = 30, message = "Name is too short or too long")
+    @Column(name = "name")
     private String name;
 
     @Min(value = 0, message = "Age should be more than 0")
+    @Column(name = "age")
     private int age;
 
-    @NotEmpty(message = "Email shouldn't not be empty!")
-    @Email(message = "Email should be valid")
-    private String email;
+//    @NotEmpty(message = "Email shouldn't not be empty!")
+//    @Email(message = "Email should be valid")
+//    private String email;
 
     // Country, City, Code (6 numbers)
-    @Pattern(regexp = "[A-Z][a-z]+, [A-Z][a-z]+, \\d{6}", message = "Your address should be in this format: Country, City, Code (6 numbers)")
-    private String address;
+//    @Pattern(regexp = "[A-Z][a-z]+, [A-Z][a-z]+, \\d{6}", message = "Your address should be in this format: Country, City, Code (6 numbers)")
+//    private String address;
     public Person() {
     }
 
-    public Person(int id, String name, int age, String email, String address) {
-        this.id = id;
+    public Person(String name, int age) {
         this.name = name;
         this.age = age;
-        this.email = email;
-        this.address = address;
     }
 
     public int getId() {
@@ -57,19 +58,4 @@ public class Person {
         this.age = age;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
 }

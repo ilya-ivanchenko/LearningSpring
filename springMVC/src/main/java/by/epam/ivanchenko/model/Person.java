@@ -19,9 +19,10 @@ public class Person {
     @Column(name = "age")
     private int age;
 
-//    @NotEmpty(message = "Email shouldn't not be empty!")
-//    @Email(message = "Email should be valid")
-//    private String email;
+    @NotEmpty(message = "Email shouldn't not be empty!")
+    @Email(message = "Email should be valid")
+    @Column(name = "email")
+    private String email;
 
     // Country, City, Code (6 numbers)
 //    @Pattern(regexp = "[A-Z][a-z]+, [A-Z][a-z]+, \\d{6}", message = "Your address should be in this format: Country, City, Code (6 numbers)")
@@ -29,9 +30,10 @@ public class Person {
     public Person() {
     }
 
-    public Person(String name, int age) {
+    public Person(String name, int age, String email) {
         this.name = name;
         this.age = age;
+        this.email = email;
     }
 
     public int getId() {
@@ -56,6 +58,13 @@ public class Person {
 
     public void setAge(int age) {
         this.age = age;
+    }
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
 }

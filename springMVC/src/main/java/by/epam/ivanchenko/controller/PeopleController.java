@@ -3,6 +3,7 @@ package by.epam.ivanchenko.controller;
 //import by.epam.ivanchenko.dao.PersonDAO;
 import by.epam.ivanchenko.model.Person;
 
+import by.epam.ivanchenko.service.ItemService;
 import by.epam.ivanchenko.service.PeopleService;
 //import by.epam.ivanchenko.util.PersonValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,15 +20,23 @@ public class PeopleController {
 //    private final PersonDAO personDAO;
     private final PeopleService peopleService;
 //    private final PersonValidator personValidator;
+    private final ItemService itemService;
 
     @Autowired
-    public PeopleController(PeopleService peopleService) {
+    public PeopleController(PeopleService peopleService, ItemService itemService) {
         this.peopleService = peopleService;
+        this.itemService = itemService;
     }
 
     @GetMapping()                                                        //по URL /people будет вызываться метод index()
     public String index(Model peopleModel) {
         peopleModel.addAttribute("people", peopleService.findAll());
+
+        itemService.findByItemName("Airpods");
+        itemService.findByOwner(peopleService.findAll().get(0));
+
+        peopleService.test();
+
         return "people/index";
     }
 
@@ -77,4 +86,6 @@ public class PeopleController {
         peopleService.delete(id);
         return "redirect:/people";
     }
+
+    //
 }

@@ -2,6 +2,8 @@ package by.epam.ivanchenko.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.util.List;
+
 @Entity
 @Table(name = "person")
 public class Person {
@@ -23,6 +25,11 @@ public class Person {
     @Email(message = "Email should be valid")
     @Column(name = "email")
     private String email;
+
+
+
+    @OneToMany(mappedBy = "owner")
+    private List<Item> items;
 
     // Country, City, Code (6 numbers)
 //    @Pattern(regexp = "[A-Z][a-z]+, [A-Z][a-z]+, \\d{6}", message = "Your address should be in this format: Country, City, Code (6 numbers)")
@@ -67,4 +74,21 @@ public class Person {
         this.email = email;
     }
 
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Item> items) {
+        this.items = items;
+    }
+
+    @Override
+    public String toString() {
+        return "Person: " +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                ", email='" + email + '\'' +
+                '.';
+    }
 }

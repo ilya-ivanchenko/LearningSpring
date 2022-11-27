@@ -1,7 +1,10 @@
 package by.epam.ivanchenko.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -26,7 +29,19 @@ public class Person {
     @Column(name = "email")
     private String email;
 
+    @Column(name = "date_of_birth")
+    @Temporal(TemporalType.DATE)                                                    // Тип даты из объекта сконвертируется в тип даты в БД
+    @DateTimeFormat(pattern = "dd/MM/yyyy")                                         // Парсинг строки  в дату - в объект Date
+    private Date dateOfBirth;
 
+    @Column(name = "created_at")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdAt;
+
+//    @Enumerated(EnumType.ORDINAL)                                                  // Для сохранения Enum в БД. ORDINAL - enum переводится в индексы 0,1,2...
+                                                                                     // Но, тогда нельзя менять порядок перечислений в классе Enum
+    @Enumerated(EnumType.STRING)                                                     // STRING - Enum сохр. под своим именем, порядок перечислений любой
+    private Mood mood;
 
     @OneToMany(mappedBy = "owner")
     private List<Item> items;
@@ -80,6 +95,30 @@ public class Person {
 
     public void setItems(List<Item> items) {
         this.items = items;
+    }
+
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Mood getMood() {
+        return mood;
+    }
+
+    public void setMood(Mood mood) {
+        this.mood = mood;
     }
 
     @Override

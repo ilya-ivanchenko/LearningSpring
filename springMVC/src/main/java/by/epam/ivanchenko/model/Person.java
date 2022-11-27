@@ -130,4 +130,32 @@ public class Person {
                 ", email='" + email + '\'' +
                 '.';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Person person = (Person) o;
+
+        if (id != person.id) return false;
+        if (age != person.age) return false;
+        if (name != null ? !name.equals(person.name) : person.name != null) return false;
+        if (email != null ? !email.equals(person.email) : person.email != null) return false;
+        if (dateOfBirth != null ? !dateOfBirth.equals(person.dateOfBirth) : person.dateOfBirth != null) return false;
+        if (createdAt != null ? !createdAt.equals(person.createdAt) : person.createdAt != null) return false;
+        return mood == person.mood;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + age;
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (dateOfBirth != null ? dateOfBirth.hashCode() : 0);
+        result = 31 * result + (createdAt != null ? createdAt.hashCode() : 0);
+        result = 31 * result + (mood != null ? mood.hashCode() : 0);
+        return result;
+    }
 }
